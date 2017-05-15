@@ -25,7 +25,7 @@
 #include "lidar_camera_calibration/Utils.h"
 
 int iteration_count = 0;
-int MAX_ITER = 5;
+int MAX_ITER = 100;
 std::vector< std::vector<cv::Point> > stored_corners;
 
 void getCorners(cv::Mat img, pcl::PointCloud<pcl::PointXYZ> scan, cv::Mat P, int num_of_markers)
@@ -224,7 +224,7 @@ void getCorners(cv::Mat img, pcl::PointCloud<pcl::PointXYZ> scan, cv::Mat P, int
 			c_3D.push_back(cv::Point3f(p_intersect(0), p_intersect(1), p_intersect(2)));
 			corners->push_back(pcl::PointXYZ(p_intersect(0), p_intersect(1), p_intersect(2)));
 			std::cout << "Point of intersection is approximately: \n" << p_intersect << "\n";
-			//std::cout << "Distance between the lines: " << (p1 - p2).squaredNorm () << "\n";
+			std::cout << "Distance between the lines: " << (p1 - p2).squaredNorm () << "\n";
 			std::cout << p_intersect(0) << " " << p_intersect(1) << " " << p_intersect(2) <<  "\n";
 			outfile << p_intersect(0) << " " << p_intersect(1) << " " << p_intersect(2) <<  "\n";
 
@@ -235,7 +235,10 @@ void getCorners(cv::Mat img, pcl::PointCloud<pcl::PointXYZ> scan, cv::Mat P, int
 		std::cout << "Distance between the corners:\n";
 		for(int i=0; i<LINE_SEGMENTS[q]; i++)
 		{
-			std::cout << sqrt(pow(c_3D[LINE_SEGMENTS[q]*q+i].x-c_3D[(LINE_SEGMENTS[q]*q+i+1)%LINE_SEGMENTS[q]].x, 2) + pow(c_3D[LINE_SEGMENTS[q]*q+i].y-c_3D[(LINE_SEGMENTS[q]*q+i+1)%LINE_SEGMENTS[q]].y, 2) + pow(c_3D[LINE_SEGMENTS[q]*q+i].z-c_3D[(LINE_SEGMENTS[q]*q+i+1)%LINE_SEGMENTS[q]].z, 2)) << std::endl;
+			std::cout << sqrt(
+				pow(c_3D[LINE_SEGMENTS[q]*q+i].x-c_3D[(LINE_SEGMENTS[q]*q+i+1)%LINE_SEGMENTS[q]].x, 2) +
+				pow(c_3D[LINE_SEGMENTS[q]*q+i].y-c_3D[(LINE_SEGMENTS[q]*q+i+1)%LINE_SEGMENTS[q]].y, 2) +
+				pow(c_3D[LINE_SEGMENTS[q]*q+i].z-c_3D[(LINE_SEGMENTS[q]*q+i+1)%LINE_SEGMENTS[q]].z, 2)) << std::endl;
 		}
 
 

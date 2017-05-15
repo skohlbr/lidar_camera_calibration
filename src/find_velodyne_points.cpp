@@ -44,7 +44,7 @@ string CAMERA_INFO_TOPIC;
 string VELODYNE_TOPIC;
 
 
-Mat projection_matrix;
+Mat projection_matrix; 
 Mat frame_rgb;
 
 pcl::PointCloud<myPointXYZRID> point_cloud;
